@@ -12,9 +12,6 @@ RUN apt-get update \
     && apt-get install -y docker-ce-cli \
     # Install icu-devtools
     && apt-get install -y icu-devtools \ 
-    # Install kubectl
-    && curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.16.2/bin/linux/amd64/kubectl \
-    && chmod +x /usr/local/bin/kubectl \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
@@ -22,6 +19,10 @@ RUN apt-get update \
 
 # Set up bash history
 RUN echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> /root/.bashrc
+
+# Install kubectl
+RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.19.0/bin/linux/amd64/kubectl \
+    && chmod +x /usr/local/bin/kubectl
 
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/
